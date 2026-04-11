@@ -71,13 +71,3 @@ The `sql/schema.sql` file creates the following tables:
 | `SavedSchools` | Schools a user has bookmarked |
 
 ---
-
-## Design Notes
-
-- I'm using PostgreSQL as the database. The schema uses `SERIAL` for auto-increment IDs.
-- The web app uses Flask sessions for login — nothing fancy, just enough to tie a user
-  to their saved schools.
-- The search query is built dynamically based on which filters the user fills in,
-  using parameterized queries (no string concatenation) to avoid SQL injection.
-- I kept the frontend plain HTML/CSS — no JS framework — since the goal is just to
-  demonstrate the database queries working, not to build a polished product.
