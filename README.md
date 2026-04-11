@@ -10,11 +10,9 @@ location, size, and academic profile. Backed by a relational database populated 
 
 ## Team Members
 
-| Name | Case ID | Technical Role |
-|------|---------|----------------|
-| Caio Albuquerque | caio-a18 | Web interface + SQL table creation (DDL) |
-| Tommaso | txa### | ER diagram redesign + schema reduction + normalization |
-| Dilon | dxa### | Data collection (IPEDS) + database population + CLI |
+- Caio
+- Tommaso
+- Dilon
 
 ---
 
