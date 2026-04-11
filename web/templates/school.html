@@ -39,15 +39,15 @@
             <table class="info-table">
                 <tr>
                     <td>In-State Tuition</td>
-                    <td>{{ "$%,d" | format(school.tuitioninstate) if school.tuitioninstate else 'N/A' }}</td>
+                    <td>{{ school.tuitioninstate | currency }}</td>
                 </tr>
                 <tr>
                     <td>Out-of-State Tuition</td>
-                    <td>{{ "$%,d" | format(school.tuitionoutofstate) if school.tuitionoutofstate else 'N/A' }}</td>
+                    <td>{{ school.tuitionoutofstate | currency }}</td>
                 </tr>
                 <tr>
                     <td>Room & Board</td>
-                    <td>{{ "$%,d" | format(school.roomandboard) if school.roomandboard else 'N/A' }}</td>
+                    <td>{{ school.roomandboard | currency }}</td>
                 </tr>
             </table>
         </div>
@@ -73,18 +73,18 @@
 
     </div>
 
-    <!-- Programs section -->
+    <!-- Programs section — grouped by field -->
     <div class="programs-section">
         <h2>Programs Offered ({{ programs|length }})</h2>
         {% if programs %}
-            <!-- Group programs by field -->
-            {% set current_field = [] %}
+            {% set ns = namespace(current_field=None) %}
             {% for p in programs %}
-                {% if p.field != current_field[-1] if current_field else true %}
-                    {% if current_field %}</ul>{% endif %}
-                    <h3 class="field-header">{{ p.field or 'Other' }}</h3>
+                {% set field_label = p.field or 'Other' %}
+                {% if field_label != ns.current_field %}
+                    {% if not loop.first %}</ul>{% endif %}
+                    <h3 class="field-header">{{ field_label }}</h3>
                     <ul class="program-list">
-                    {% if current_field.append(p.field) %}{% endif %}
+                    {% set ns.current_field = field_label %}
                 {% endif %}
                 <li>{{ p.programname }} <span class="cip-code">({{ p.programcode }})</span></li>
             {% endfor %}
