@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}{{ school.name }} — CampusConnect{% endblock %}
+
+{% block content %}
+<div class="school-detail">
+
+    <a href="{{ url_for('index') }}" class="back-link">← Back to search</a>
+
+    <h1>{{ school.name }}</h1>
+    <p class="school-meta">
+        {{ school.statename }} &nbsp;·&nbsp;
+        {{ school.type or 'N/A' }} &nbsp;·&nbsp;
+        {{ school.size or 'N/A' }} enrollment
+        {% if school.websiteurl %}
+            &nbsp;·&nbsp; <a href="{{ school.websiteurl }}" target="_blank">Visit website ↗</a>
+        {% endif %}
+    </p>
+
+    <!-- Save / unsave button -->
+    {% if session.user_id %}
+        {% if already_saved %}
+            <form method="POST" action="{{ url_for('unsave_school', school_id=school.institutionid) }}">
+                <button type="submit" class="btn-unsave">Remove from my schools</button>
+            </form>
+        {% else %}
+            <form method="POST" action="{{ url_for('save_school', school_id=school.institutionid) }}">
+                <button type="submit" class="btn-save">+ Save to my schools</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <p><a href="{{ url_for('login') }}">Log in</a> to save this school.</p>
+    {% endif %}
+
+    <div class="info-grid">
+
+        <!-- Cost section -->
+        <div class="info-card">
+            <h2>Cost</h2>
+            <table class="info-table">
+                <tr>
+                    <td>In-State Tuition</td>
+                    <td>{{ "$%,d" | format(school.tuitioninstate) if school.tuitioninstate else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td>Out-of-State Tuition</td>
+                    <td>{{ "$%,d" | format(school.tuitionoutofstate) if school.tuitionoutofstate else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td>Room & Board</td>
+                    <td>{{ "$%,d" | format(school.roomandboard) if school.roomandboard else 'N/A' }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Admissions section -->
+        <div class="info-card">
+            <h2>Admissions</h2>
+            <table class="info-table">
+                <tr>
+                    <td>Min GPA</td>
+                    <td>{{ school.mingpa or 'Not reported' }}</td>
+                </tr>
+                <tr>
+                    <td>Min SAT</td>
+                    <td>{{ school.minsat or 'Not reported' }}</td>
+                </tr>
+                <tr>
+                    <td>Min ACT</td>
+                    <td>{{ school.minact or 'Not reported' }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Programs section -->
+    <div class="programs-section">
+        <h2>Programs Offered ({{ programs|length }})</h2>
+        {% if programs %}
+            <!-- Group programs by field -->
+            {% set current_field = [] %}
+            {% for p in programs %}
+                {% if p.field != current_field[-1] if current_field else true %}
+                    {% if current_field %}</ul>{% endif %}
+                    <h3 class="field-header">{{ p.field or 'Other' }}</h3>
+                    <ul class="program-list">
+                    {% if current_field.append(p.field) %}{% endif %}
+                {% endif %}
+                <li>{{ p.programname }} <span class="cip-code">({{ p.programcode }})</span></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No programs on record for this institution.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

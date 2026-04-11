@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}{% if register %}Register{% else %}Login{% endif %} — CampusConnect{% endblock %}
+
+{% block content %}
+
+<div class="auth-form">
+    {% if register %}
+        <h1>Create an Account</h1>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <h3>Your Academic Stats (optional)</h3>
+            <p class="help-text">These help us match you with schools you're likely to get into.</p>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gpa">GPA (out of 4.0)</label>
+                    <input type="number" step="0.01" min="0" max="4" name="gpa" id="gpa" placeholder="e.g. 3.5">
+                </div>
+                <div class="form-group">
+                    <label for="sat">SAT Score</label>
+                    <input type="number" name="sat" id="sat" placeholder="e.g. 1200">
+                </div>
+                <div class="form-group">
+                    <label for="act">ACT Score</label>
+                    <input type="number" name="act" id="act" placeholder="e.g. 26">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="preferred_state">Preferred State</label>
+                <select name="preferred_state" id="preferred_state">
+                    <option value="">No preference</option>
+                    {% for s in states %}
+                        <option value="{{ s.statecode }}">{{ s.statename }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn-search">Create Account</button>
+        </form>
+
+    {% else %}
+        <h1>Log In</h1>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button type="submit" class="btn-search">Log In</button>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock %}

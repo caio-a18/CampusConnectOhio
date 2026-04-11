@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}My Profile — CampusConnect{% endblock %}
+
+{% block content %}
+<h1>My Profile</h1>
+
+{% if user %}
+<div class="profile-stats">
+    <h2>{{ user.name }}</h2>
+    <p>{{ user.email }}</p>
+    <div class="stats-grid">
+        <div class="stat">
+            <span class="stat-label">GPA</span>
+            <span class="stat-value">{{ user.gpa or '—' }}</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">SAT</span>
+            <span class="stat-value">{{ user.satscore or '—' }}</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">ACT</span>
+            <span class="stat-value">{{ user.actscore or '—' }}</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Preferred State</span>
+            <span class="stat-value">{{ user.preferredstate or '—' }}</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<h2>Saved Schools ({{ saved|length }})</h2>
+
+{% if saved %}
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>School</th>
+                <th>State</th>
+                <th>Type</th>
+                <th>In-State Tuition</th>
+                <th>Saved On</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in saved %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('school', school_id=s.institutionid) }}">{{ s.name }}</a>
+                </td>
+                <td>{{ s.statename }}</td>
+                <td>{{ s.type or '—' }}</td>
+                <td>{{ "$%,d" | format(s.tuitioninstate) if s.tuitioninstate else '—' }}</td>
+                <td>{{ s.saveddate.strftime('%b %d, %Y') if s.saveddate else '—' }}</td>
+                <td>
+                    <!-- Remove button inline in the table -->
+                    <form method="POST" action="{{ url_for('unsave_school', school_id=s.institutionid) }}">
+                        <button type="submit" class="btn-remove">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>You haven't saved any schools yet. <a href="{{ url_for('index') }}">Search for schools</a> to get started.</p>
+{% endif %}
+
+{% endblock %}
