@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Search Schools — CampusConnect{% endblock %}
+
+{% block content %}
+<h1>Find Your College</h1>
+<p class="subtitle">Filter by tuition, location, size, and your academic stats to find schools that fit.</p>
+
+<!-- Search form — all fields are optional -->
+<form method="POST" action="/" class="search-form">
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="state">State</label>
+            <select name="state" id="state">
+                <option value="">Any state</option>
+                {% for s in states %}
+                    <option value="{{ s.statecode }}"
+                        {% if request.form.get('state') == s.statecode %}selected{% endif %}>
+                        {{ s.statename }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="inst_type">Type</label>
+            <select name="inst_type" id="inst_type">
+                <option value="">Any type</option>
+                <option value="Public"   {% if request.form.get('inst_type') == 'Public' %}selected{% endif %}>Public</option>
+                <option value="Private"  {% if request.form.get('inst_type') == 'Private' %}selected{% endif %}>Private</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="size">Size</label>
+            <select name="size" id="size">
+                <option value="">Any size</option>
+                <option value="Small"   {% if request.form.get('size') == 'Small' %}selected{% endif %}>Small</option>
+                <option value="Medium"  {% if request.form.get('size') == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="Large"   {% if request.form.get('size') == 'Large' %}selected{% endif %}>Large</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="max_tuition">Max In-State Tuition ($/yr)</label>
+            <input type="number" name="max_tuition" id="max_tuition"
+                placeholder="e.g. 15000"
+                value="{{ request.form.get('max_tuition', '') }}">
+        </div>
+
+        <div class="form-group">
+            <label for="min_gpa">My GPA</label>
+            <input type="number" step="0.01" min="0" max="4" name="min_gpa" id="min_gpa"
+                placeholder="e.g. 3.5"
+                value="{{ request.form.get('min_gpa', '') }}">
+        </div>
+
+        <div class="form-group">
+            <label for="min_sat">My SAT Score</label>
+            <input type="number" name="min_sat" id="min_sat"
+                placeholder="e.g. 1200"
+                value="{{ request.form.get('min_sat', '') }}">
+        </div>
+
+        <div class="form-group">
+            <label for="min_act">My ACT Score</label>
+            <input type="number" name="min_act" id="min_act"
+                placeholder="e.g. 26"
+                value="{{ request.form.get('min_act', '') }}">
+        </div>
+    </div>
+
+    <button type="submit" class="btn-search">Search</button>
+</form>
+
+
+{% if searched %}
+    {% if results %}
+        <p class="result-count">{{ results|length }} school(s) found</p>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>School</th>
+                    <th>State</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>In-State Tuition</th>
+                    <th>Out-of-State Tuition</th>
+                    <th>Min GPA</th>
+                    <th>Min SAT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in results %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('school', school_id=r.institutionid) }}">
+                            {{ r.name }}
+                        </a>
+                    </td>
+                    <td>{{ r.statename }}</td>
+                    <td>{{ r.type or '—' }}</td>
+                    <td>{{ r.size or '—' }}</td>
+                    <td>{{ "$%,d" | format(r.tuitioninstate) if r.tuitioninstate else '—' }}</td>
+                    <td>{{ "$%,d" | format(r.tuitionoutofstate) if r.tuitionoutofstate else '—' }}</td>
+                    <td>{{ r.mingpa or '—' }}</td>
+                    <td>{{ r.minsat or '—' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-results">No schools matched your filters. Try loosening the criteria.</p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

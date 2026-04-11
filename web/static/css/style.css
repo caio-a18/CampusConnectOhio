@@ -1,0 +1,460 @@
+/* CampusConnect - Main Stylesheet
+   Caio Albuquerque (caio-a18)
+   Keeping this simple — just enough to make it readable for the demo */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+/* ---- Navbar ---- */
+
+.navbar {
+    background: #1a3a5c;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-brand {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
+
+.nav-links a {
+    color: #c8d8e8;
+    text-decoration: none;
+    margin-left: 24px;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+
+/* ---- Main container ---- */
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 24px;
+}
+
+h1 {
+    font-size: 1.9rem;
+    margin-bottom: 8px;
+    color: #1a3a5c;
+}
+
+h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: #1a3a5c;
+    margin-top: 28px;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin: 16px 0 8px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 28px;
+}
+
+
+/* ---- Flash messages ---- */
+
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash {
+    background: #e8f4fd;
+    border-left: 4px solid #1a3a5c;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+
+/* ---- Search form ---- */
+
+.search-form {
+    background: white;
+    padding: 28px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 32px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 160px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 9px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #1a3a5c;
+}
+
+.btn-search {
+    background: #1a3a5c;
+    color: white;
+    border: none;
+    padding: 11px 32px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+.btn-search:hover {
+    background: #0f2540;
+}
+
+
+/* ---- Results table ---- */
+
+.result-count {
+    color: #555;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    font-size: 0.9rem;
+}
+
+.results-table thead {
+    background: #1a3a5c;
+    color: white;
+}
+
+.results-table th {
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.results-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.results-table tbody tr:hover {
+    background: #f0f5fa;
+}
+
+.results-table a {
+    color: #1a3a5c;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.results-table a:hover {
+    text-decoration: underline;
+}
+
+.no-results {
+    color: #666;
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+}
+
+
+/* ---- School detail page ---- */
+
+.school-detail {
+    background: white;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #1a3a5c;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.school-meta {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.school-meta a {
+    color: #1a3a5c;
+}
+
+.info-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.info-card {
+    flex: 1;
+    min-width: 220px;
+    background: #f5f7fa;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.info-table td {
+    padding: 7px 0;
+    border-bottom: 1px solid #e0e5eb;
+}
+
+.info-table td:first-child {
+    color: #666;
+    width: 55%;
+}
+
+.info-table td:last-child {
+    font-weight: 600;
+    text-align: right;
+}
+
+.info-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Programs section */
+
+.programs-section {
+    margin-top: 32px;
+}
+
+.field-header {
+    color: #1a3a5c;
+    font-size: 1rem;
+    margin: 20px 0 6px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #e0e5eb;
+}
+
+.program-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 4px;
+}
+
+.program-list li {
+    font-size: 0.88rem;
+    padding: 4px 0;
+    color: #444;
+}
+
+.cip-code {
+    color: #999;
+    font-size: 0.8rem;
+}
+
+/* Save buttons */
+
+.btn-save {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+}
+
+.btn-save:hover {
+    background: #1b5e20;
+}
+
+.btn-unsave, .btn-remove {
+    background: #c62828;
+    color: white;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.btn-unsave {
+    margin-bottom: 20px;
+    padding: 9px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-unsave:hover, .btn-remove:hover {
+    background: #8b0000;
+}
+
+
+/* ---- Profile page ---- */
+
+.profile-stats {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-bottom: 32px;
+}
+
+.profile-stats h2 {
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.profile-stats p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f5f7fa;
+    padding: 16px 24px;
+    border-radius: 8px;
+    min-width: 100px;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a3a5c;
+}
+
+
+/* ---- Auth forms ---- */
+
+.auth-form {
+    max-width: 480px;
+    margin: 0 auto;
+    background: white;
+    padding: 36px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.auth-form h1 {
+    margin-bottom: 6px;
+}
+
+.auth-form > p {
+    color: #666;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+}
+
+.help-text {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 12px !important;
+}
+
+.auth-form h3 {
+    margin-top: 24px;
+}
+
+.auth-form .form-group {
+    margin-bottom: 16px;
+}
