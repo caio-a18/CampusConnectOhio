@@ -8,7 +8,15 @@
 <!-- Search form — all fields are optional -->
 <form method="POST" action="/" class="search-form">
 
+    <!-- Row 1: school name + location filters -->
     <div class="form-row">
+        <div class="form-group form-group--wide">
+            <label for="school_name">School Name</label>
+            <input type="text" name="school_name" id="school_name"
+                placeholder="e.g. Ohio State"
+                value="{{ request.form.get('school_name', '') }}">
+        </div>
+
         <div class="form-group">
             <label for="state">State</label>
             <select name="state" id="state">
@@ -26,8 +34,8 @@
             <label for="inst_type">Type</label>
             <select name="inst_type" id="inst_type">
                 <option value="">Any type</option>
-                <option value="Public"   {% if request.form.get('inst_type') == 'Public' %}selected{% endif %}>Public</option>
-                <option value="Private"  {% if request.form.get('inst_type') == 'Private' %}selected{% endif %}>Private</option>
+                <option value="Public"  {% if request.form.get('inst_type') == 'Public'  %}selected{% endif %}>Public</option>
+                <option value="Private" {% if request.form.get('inst_type') == 'Private' %}selected{% endif %}>Private</option>
             </select>
         </div>
 
@@ -35,13 +43,14 @@
             <label for="size">Size</label>
             <select name="size" id="size">
                 <option value="">Any size</option>
-                <option value="Small"   {% if request.form.get('size') == 'Small' %}selected{% endif %}>Small</option>
-                <option value="Medium"  {% if request.form.get('size') == 'Medium' %}selected{% endif %}>Medium</option>
-                <option value="Large"   {% if request.form.get('size') == 'Large' %}selected{% endif %}>Large</option>
+                <option value="Small"  {% if request.form.get('size') == 'Small'  %}selected{% endif %}>Small</option>
+                <option value="Medium" {% if request.form.get('size') == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="Large"  {% if request.form.get('size') == 'Large'  %}selected{% endif %}>Large</option>
             </select>
         </div>
     </div>
 
+    <!-- Row 2: tuition filters -->
     <div class="form-row">
         <div class="form-group">
             <label for="max_tuition">Max In-State Tuition ($/yr)</label>
@@ -50,6 +59,16 @@
                 value="{{ request.form.get('max_tuition', '') }}">
         </div>
 
+        <div class="form-group">
+            <label for="max_tuition_out">Max Out-of-State Tuition ($/yr)</label>
+            <input type="number" name="max_tuition_out" id="max_tuition_out"
+                placeholder="e.g. 40000"
+                value="{{ request.form.get('max_tuition_out', '') }}">
+        </div>
+    </div>
+
+    <!-- Row 3: academic stats -->
+    <div class="form-row">
         <div class="form-group">
             <label for="min_gpa">My GPA</label>
             <input type="number" step="0.01" min="0" max="4" name="min_gpa" id="min_gpa"
@@ -96,15 +115,19 @@
                 {% for r in results %}
                 <tr>
                     <td>
-                        <a href="{{ url_for('school', school_id=r.institutionid) }}">
+                        {% if r.websiteurl %}
+                            <a href="{{ r.websiteurl }}" target="_blank" rel="noopener">
+                                {{ r.name }} ↗
+                            </a>
+                        {% else %}
                             {{ r.name }}
-                        </a>
+                        {% endif %}
                     </td>
                     <td>{{ r.statename }}</td>
                     <td>{{ r.type or '—' }}</td>
                     <td>{{ r.size or '—' }}</td>
-                    <td>{{ "$%,d" | format(r.tuitioninstate) if r.tuitioninstate else '—' }}</td>
-                    <td>{{ "$%,d" | format(r.tuitionoutofstate) if r.tuitionoutofstate else '—' }}</td>
+                    <td>{{ r.tuitioninstate | currency }}</td>
+                    <td>{{ r.tuitionoutofstate | currency }}</td>
                     <td>{{ r.mingpa or '—' }}</td>
                     <td>{{ r.minsat or '—' }}</td>
                 </tr>

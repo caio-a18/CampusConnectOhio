@@ -51,7 +51,7 @@
                 </td>
                 <td>{{ s.statename }}</td>
                 <td>{{ s.type or '—' }}</td>
-                <td>{{ "$%,d" | format(s.tuitioninstate) if s.tuitioninstate else '—' }}</td>
+                <td>{{ s.tuitioninstate | currency }}</td>
                 <td>{{ s.saveddate.strftime('%b %d, %Y') if s.saveddate else '—' }}</td>
                 <td>
                     <!-- Remove button inline in the table -->

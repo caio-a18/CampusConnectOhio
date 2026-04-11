@@ -119,6 +119,12 @@ h3 {
     min-width: 160px;
 }
 
+/* Give the school name field more room since names can be long */
+.form-group--wide {
+    flex: 2;
+    min-width: 240px;
+}
+
 .form-group label {
     font-size: 0.85rem;
     font-weight: 600;

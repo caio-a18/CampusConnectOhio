@@ -19,14 +19,22 @@ import psycopg2.extras
 
 app = Flask(__name__)
 
+# Custom Jinja2 filter for displaying dollar amounts with commas
+# e.g. 15000 -> "$15,000"
+@app.template_filter("currency")
+def currency_filter(value):
+    if value is None:
+        return "—"
+    return "${:,}".format(int(value))
+
 # Secret key for session management — change this to something random if deploying
 app.secret_key = "csds341_campusconnect_dev"
 
 # Database connection settings — update these to match your local setup
 DB_CONFIG = {
     "dbname":   "campusconnect",
-    "user":     "postgres",
-    "password": "password",
+    "user":     "caioalbuquerque",
+    "password": "",
     "host":     "localhost",
     "port":     5432,
 }
@@ -67,13 +75,15 @@ def index():
         searched = True
 
         # Pull the filter values from the form — any of these can be empty
-        state_code      = request.form.get("state") or None
-        max_tuition     = request.form.get("max_tuition") or None
-        inst_type       = request.form.get("inst_type") or None
-        size            = request.form.get("size") or None
-        min_gpa         = request.form.get("min_gpa") or None
-        min_sat         = request.form.get("min_sat") or None
-        min_act         = request.form.get("min_act") or None
+        school_name      = request.form.get("school_name") or None
+        state_code       = request.form.get("state") or None
+        max_tuition      = request.form.get("max_tuition") or None
+        max_tuition_out  = request.form.get("max_tuition_out") or None
+        inst_type        = request.form.get("inst_type") or None
+        size             = request.form.get("size") or None
+        min_gpa          = request.form.get("min_gpa") or None
+        min_sat          = request.form.get("min_sat") or None
+        min_act          = request.form.get("min_act") or None
 
         # Build the query dynamically based on what was filled in.
         # I'm using parameterized queries (%s placeholders) so there's
@@ -102,6 +112,11 @@ def index():
 
         params = []
 
+        if school_name:
+            # ILIKE is case-insensitive LIKE in PostgreSQL
+            query += " AND i.Name ILIKE %s"
+            params.append(f"%{school_name}%")
+
         if state_code:
             query += " AND ii.StateCode = %s"
             params.append(state_code)
@@ -110,6 +125,10 @@ def index():
             # Filter on in-state tuition — most relevant for state residents
             query += " AND c.TuitionInState <= %s"
             params.append(int(max_tuition))
+
+        if max_tuition_out:
+            query += " AND c.TuitionOutOfState <= %s"
+            params.append(int(max_tuition_out))
 
         if inst_type:
             query += " AND i.Type = %s"
@@ -414,4 +433,4 @@ def logout():
 if __name__ == "__main__":
     # debug=True auto-reloads the server when you save changes
     # turn this off if running in front of anyone else
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
