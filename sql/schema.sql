@@ -6,12 +6,6 @@
 -- Assumes you're connected to a database named campusconnect.
 --   psql -d campusconnect -f schema.sql
 
-
--- ============================================================
--- Drop tables if they already exist (useful when re-running)
--- Order matters here because of foreign key dependencies
--- ============================================================
-
 DROP TABLE IF EXISTS SavedSchools CASCADE;
 DROP TABLE IF EXISTS Offers CASCADE;
 DROP TABLE IF EXISTS Accepts CASCADE;
