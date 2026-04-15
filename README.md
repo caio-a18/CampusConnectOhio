@@ -4,7 +4,7 @@
 
 A college search and comparison tool that lets students filter U.S. institutions by tuition,
 location, size, and academic profile. Backed by a relational database populated from IPEDS data
-(~6,000 institutions), with a web interface for searching and saving schools.
+(~20,000 rows across all tables), with a web interface and CLI for searching and saving schools.
 
 ---
 
@@ -68,18 +68,20 @@ SavedSchools(UserID, InstitutionID, SavedDate)
 
 ## Items to Fix (from Proposal Feedback)
 
-### Tommaso — ER Diagram + Schemas + Normalization
+### Tommaso — ER Diagram + Schemas + SQL Views
 
-**ER Diagram (was 15/25):**
-- Remove `InstitutionID` from every entity box — it is not an attribute of those entities,
-  it is a foreign key that belongs on the relationship tables
+**SQL Views:** `sql/views.sql`
+- `UserSummary` — each user with a count of their saved schools
+- `UserSchoolMatches` — matches each user to schools they qualify for based on their stored GPA/SAT/ACT
+
+**ER Diagram (was 15/25):** `docs/er_diagram.png`
+- Remove `InstitutionID` from every entity box — it belongs on the relationship tables, not inside entities
 - Add proper participation constraints (double line = total participation, single = partial)
-- Add two new entities: `UserProfile` and `SavedSchools` to increase data volume
+- Add `UserProfile` and `SavedSchools` as entities with a `Saves` relationship
 - Redraw using the Assignment 1 ER tool so lines and arrows are clean and readable
 
-**Schemas (was 15/25):**
-- Add the four missing relationship schemas shown above (`isIn`, `Costs`, `Offers`, `Accepts`)
-- Add `SavedSchools` schema
+**Schemas (was 15/25):** `docs/schemas.md`
+- Add the four missing relationship schemas (`isIn`, `Costs`, `Offers`, `Accepts`, `SavedSchools`)
 - Verify all tables reach 3NF — no partial dependencies, no transitive dependencies
 
 ---
@@ -97,18 +99,16 @@ SavedSchools(UserID, InstitutionID, SavedDate)
   | Costs | ~6,000 |
   | Accepts | ~6,000 |
   | isIn | ~6,000 |
-  | Offers (CIP codes) | ~120,000 |
-  | **Total** | **~140,000+** |
+  | Program + Offers | ~2,000 |
+  | **Total** | **~20,000+** |
 
 - Write `data/load_data.py` to parse the IPEDS CSVs and INSERT rows into the DB
 
-**CLI:** *(moved to Caio — see below)*
+**SQL Queries:** `sql/queries.sql` — 12 reference queries covering all major use cases
 
 ---
 
 ### Caio — Web Interface + DDL + CLI
-
-See the `caio` branch for the implementation.
 
 **CREATE TABLE statements:** `sql/schema.sql`
 
