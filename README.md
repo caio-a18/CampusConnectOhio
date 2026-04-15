@@ -28,10 +28,9 @@ CampusConnectOhio/
 │   ├── templates/          # HTML pages (Caio)
 │   └── static/             # CSS + JS (Caio)
 ├── cli/
-│   └── campus_cli.py       # Command-line interface (Dilon)
+│   └── campus_cli.py       # Command-line interface (Caio)
 ├── data/
-│   ├── load_data.py        # IPEDS CSV → database loader (Dilon)
-│   └── generate_users.py   # Synthetic UserProfile + SavedSchools data (Dilon)
+│   └── load_data.py        # IPEDS CSV → database loader (Dilon)
 └── docs/
     ├── er_diagram.png      # Final ER diagram (Tommaso)
     └── schemas.md          # Written-out relational schemas (Tommaso)
@@ -99,25 +98,15 @@ SavedSchools(UserID, InstitutionID, SavedDate)
   | Accepts | ~6,000 |
   | isIn | ~6,000 |
   | Offers (CIP codes) | ~120,000 |
-  | UserProfile (generated) | ~500 |
-  | SavedSchools (generated) | ~2,500 |
   | **Total** | **~140,000+** |
 
 - Write `data/load_data.py` to parse the IPEDS CSVs and INSERT rows into the DB
-- Write `data/generate_users.py` to generate synthetic user + saved-school rows
 
-**CLI:**
-- Write `cli/campus_cli.py` — a Python script that connects to the database and lets
-  a user run the main queries interactively:
-  - Filter by tuition range
-  - Filter by state and enrollment size
-  - Match by GPA / SAT / ACT
-  - View a user's saved schools
-  - Save a school to a user profile
+**CLI:** *(moved to Caio — see below)*
 
 ---
 
-### Caio — Web Interface + DDL
+### Caio — Web Interface + DDL + CLI
 
 See the `caio` branch for the implementation.
 
@@ -129,6 +118,11 @@ See the `caio` branch for the implementation.
 - User login (session-based, simple)
 - Save school to profile
 - View saved schools
+
+**CLI:** `cli/campus_cli.py`
+- Interactive menu to run all main queries from the terminal
+- Filter by state, tuition, GPA/SAT/ACT
+- View and save schools for a user profile
 
 ---
 
