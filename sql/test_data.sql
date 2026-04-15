@@ -179,16 +179,21 @@ INSERT INTO UserProfile (Name, Email, Password, GPA, SATScore, ACTScore, Preferr
 -- SavedSchools
 -- ============================================================
 
+-- Alice: Case Western, Stanford, Columbia
+-- Bob: Ohio State, Ohio University
+-- Claire: UC Berkeley, Stanford, UCLA
+-- David: Ohio University, Michigan State
+-- Emma: NYU, Columbia
 INSERT INTO SavedSchools (UserID, InstitutionID, SavedDate) VALUES
-    (1, 2,  '2026-03-01'),  -- Alice saved Case Western
-    (1, 11, '2026-03-05'),  -- Alice saved Stanford
-    (1, 13, '2026-03-10'),  -- Alice saved Columbia
-    (2, 1,  '2026-03-02'),  -- Bob saved Ohio State
-    (2, 4,  '2026-03-08'),  -- Bob saved Ohio University
-    (3, 7,  '2026-02-20'),  -- Claire saved UC Berkeley
-    (3, 11, '2026-02-25'),  -- Claire saved Stanford
-    (3, 12, '2026-03-01'),  -- Claire saved UCLA
-    (4, 4,  '2026-03-15'),  -- David saved Ohio University
-    (4, 16, '2026-03-15'),  -- David saved Michigan State
-    (5, 8,  '2026-03-03'),  -- Emma saved NYU
-    (5, 13, '2026-03-07');  -- Emma saved Columbia
+    (1, 2,  '2026-03-01'),
+    (1, 11, '2026-03-05'),
+    (1, 13, '2026-03-10'),
+    (2, 1,  '2026-03-02'),
+    (2, 4,  '2026-03-08'),
+    (3, 7,  '2026-02-20'),
+    (3, 11, '2026-02-25'),
+    (3, 12, '2026-03-01'),
+    (4, 4,  '2026-03-15'),
+    (4, 16, '2026-03-15'),
+    (5, 8,  '2026-03-03'),
+    (5, 13, '2026-03-07');
